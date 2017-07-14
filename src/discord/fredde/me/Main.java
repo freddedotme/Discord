@@ -44,7 +44,8 @@ public class Main extends JavaPlugin implements Listener
 	
 	private void pushMessage(String name, String message)
 	{
-		bot.sendFromMinecraft(name, message);
+		if(bot != null)
+			bot.sendFromMinecraft(name, message);
 	}
 	
 	public void sendFromDiscord(String name, String message)
