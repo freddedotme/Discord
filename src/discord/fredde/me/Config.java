@@ -1,6 +1,7 @@
 package discord.fredde.me;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public final class Config
 {
-	private static final Gson GSON = new Gson();
+	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	
 	private String botTokenId;
 	private long textChannelId;
