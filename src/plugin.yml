@@ -1,0 +1,5 @@
+name: Discord
+author: freddedotme
+version: 1.0
+main: discord.fredde.me.Main
+description: Push messages to Discord.
