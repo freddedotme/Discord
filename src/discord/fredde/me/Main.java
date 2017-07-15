@@ -4,6 +4,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.FileNotFoundException;
@@ -44,13 +46,27 @@ public class Main extends JavaPlugin implements Listener
   @EventHandler
   public void onAsyncPlayerChat(AsyncPlayerChatEvent e)
   {
-    pushMessage(e.getPlayer().getName(), e.getMessage());
+    pushMessage(e.getPlayer().getName() + ": " + e.getMessage());
   }
 
-  private void pushMessage(String name, String message)
+  @EventHandler
+  public void onPlayerJoin(PlayerJoinEvent e)
+  {
+    pushMessage(e.getPlayer().getName() + " joined.");
+    pushMessage("Players online: " + String.valueOf(getServer().getOnlinePlayers().size()));
+  }
+
+  @EventHandler
+  public void onPlayerQuit(PlayerQuitEvent e)
+  {
+    pushMessage(e.getPlayer().getName() + " left.");
+    pushMessage("Players online: " + String.valueOf(getServer().getOnlinePlayers().size() - 1));
+  }
+
+  private void pushMessage(String message)
   {
     if (bot != null)
-      bot.sendFromMinecraft(name, message);
+      bot.sendFromMinecraft(message);
   }
 
   void sendFromDiscord(String name, String message)

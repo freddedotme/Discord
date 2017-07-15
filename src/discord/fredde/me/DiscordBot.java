@@ -54,11 +54,9 @@ public final class DiscordBot extends ListenerAdapter
     }
   }
 
-  void sendFromMinecraft(String name, String message)
+  void sendFromMinecraft(String message)
   {
     MessageBuilder mb = new MessageBuilder();
-    mb.append(name);
-    mb.append(": ");
     mb.append(message);
 
     textChannel.sendMessage(mb.build()).queue();
