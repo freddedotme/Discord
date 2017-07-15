@@ -7,6 +7,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main extends JavaPlugin implements Listener
 {
@@ -17,11 +18,7 @@ public class Main extends JavaPlugin implements Listener
 	public void onEnable()
 	{
 		getServer().getPluginManager().registerEvents(this, this);
-	}
-	
-	@Override
-	public void onLoad()
-	{
+		
 		try
 		{
 			config = Config.load();
@@ -32,7 +29,17 @@ public class Main extends JavaPlugin implements Listener
 			config = new Config();
 			config.defaultSettings();
 			
-			getServer().getLogger().warning("[Discord] Created config file, please open it and set up the Discord bot.");
+			try
+			{
+				config.save();
+			}
+			catch(IOException e1)
+			{
+				e1.printStackTrace();
+			}
+			
+			getServer().getLogger()
+			           .warning("[Discord] Created config file, please open it and set up the Discord bot.");
 		}
 	}
 	
