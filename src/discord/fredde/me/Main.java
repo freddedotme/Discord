@@ -57,10 +57,26 @@ public class Main extends JavaPlugin implements Listener
       {
         player.sendMessage(cc("&9Invite link: &ahttps://discord.gg/azK8vdY"));
         player.sendMessage(cc("&9Members on Discord:"));
-        for (Member member : bot.getMembers())
+
+        if (bot.getMembers().size() > 0)
         {
-          player.sendMessage(member.getNickname());
+          for (Member member : bot.getMembers())
+          {
+            if (!member.getOnlineStatus().toString().equalsIgnoreCase("OFFLINE"))
+            {
+              String m = member.getEffectiveName();
+              m += " (" + member.getOnlineStatus().toString().toLowerCase() + ")";
+              if (member.getGame() != null) m += " [" + member.getGame() + "]";
+              player.sendMessage(m);
+            }
+          }
         }
+        else
+        {
+          player.sendMessage("None online");
+        }
+
+        return true;
       }
     }
     return false;
