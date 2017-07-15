@@ -64,7 +64,25 @@ public final class DiscordBot extends ListenerAdapter
   void sendFromMinecraft(String message)
   {
     MessageBuilder mb = new MessageBuilder();
-    mb.append(message);
+    String[] words = message.split(" ");
+
+    for (int i = 0; i < words.length; i++)
+    {
+      String word = words[i];
+
+      if (word.startsWith("@"))
+        for (Member member : getMembers())
+          if (word.substring(1).equalsIgnoreCase(member.getEffectiveName()))
+          {
+            word = member.getAsMention();
+            break;
+          }
+      
+      mb.append(word);
+
+      if(i != words.length - 1)
+        mb.append(' ');
+    }
 
     textChannel.sendMessage(mb.build()).queue();
   }
