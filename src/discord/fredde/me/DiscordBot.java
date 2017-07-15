@@ -3,6 +3,7 @@ package discord.fredde.me;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -10,6 +11,7 @@ import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
+import java.util.List;
 
 public final class DiscordBot extends ListenerAdapter
 {
@@ -52,6 +54,11 @@ public final class DiscordBot extends ListenerAdapter
       String message = event.getMessage().getContent();
       main.sendFromDiscord(name, message);
     }
+  }
+
+  List<Member> getMembers()
+  {
+    return textChannel.getMembers();
   }
 
   void sendFromMinecraft(String message)

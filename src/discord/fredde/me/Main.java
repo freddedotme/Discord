@@ -1,8 +1,13 @@
 package discord.fredde.me;
 
+import net.dv8tion.jda.core.entities.Member;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -38,9 +43,27 @@ public class Main extends JavaPlugin implements Listener
         e1.printStackTrace();
       }
 
-      getServer().getLogger()
+      getLogger()
         .warning("[Discord] Created config file, please open it and set up the Discord bot.");
     }
+  }
+
+  public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings)
+  {
+    if (commandSender instanceof Player)
+    {
+      Player player = (Player) commandSender;
+      if (s.equalsIgnoreCase("discord"))
+      {
+        player.sendMessage(cc("&9Invite link: &ahttps://discord.gg/azK8vdY"));
+        player.sendMessage(cc("&9Members on Discord:"));
+        for (Member member : bot.getMembers())
+        {
+          player.sendMessage(member.getNickname());
+        }
+      }
+    }
+    return false;
   }
 
   @EventHandler
@@ -60,7 +83,12 @@ public class Main extends JavaPlugin implements Listener
   public void onPlayerQuit(PlayerQuitEvent e)
   {
     pushMessage(e.getPlayer().getName() + " left.");
-    pushMessage("Players online: " + String.valueOf(getServer().getOnlinePlayers().size() - 1));
+  }
+
+  @EventHandler
+  public void onPlayerDeath(PlayerDeathEvent e)
+  {
+    pushMessage(e.getDeathMessage());
   }
 
   private void pushMessage(String message)
@@ -71,6 +99,11 @@ public class Main extends JavaPlugin implements Listener
 
   void sendFromDiscord(String name, String message)
   {
-    getServer().broadcastMessage("<" + ChatColor.BLUE + "Discord" + ChatColor.RESET + " " + name + "> " + message);
+    getServer().broadcastMessage(cc("<&9Discord&r " + name + "> " + message));
+  }
+
+  private String cc(String message)
+  {
+    return ChatColor.translateAlternateColorCodes('&', message);
   }
 }

@@ -3,3 +3,6 @@ authors: [freddedotme, AlbinEriksson]
 version: 1.0
 main: discord.fredde.me.Main
 description: Push messages to Discord.
+commands:
+  discord:
+    description: View invite link and Discord users.
