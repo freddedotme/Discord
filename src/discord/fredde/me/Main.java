@@ -1,5 +1,10 @@
 package discord.fredde.me;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import net.dv8tion.jda.core.entities.Member;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,11 +18,15 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 public class Main extends JavaPlugin implements Listener
 {
+  private static final SimpleDateFormat TIMESTAMP = new SimpleDateFormat("HH:mm");
+
+  static
+  {
+    TIMESTAMP.setTimeZone(TimeZone.getTimeZone("Europe/Stockholm"));
+  }
+
   private DiscordBot bot;
 
   @Override
@@ -110,7 +119,7 @@ public class Main extends JavaPlugin implements Listener
   private void pushMessage(String message)
   {
     if (bot != null)
-      bot.sendFromMinecraft(message);
+      bot.sendFromMinecraft("[" + TIMESTAMP.format(new Date()) + "]" + message);
   }
 
   void sendFromDiscord(String name, String message)

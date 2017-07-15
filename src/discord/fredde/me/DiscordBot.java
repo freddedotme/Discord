@@ -77,7 +77,7 @@ public final class DiscordBot extends ListenerAdapter
             word = member.getAsMention();
             break;
           }
-      
+
       mb.append(word);
 
       if(i != words.length - 1)
